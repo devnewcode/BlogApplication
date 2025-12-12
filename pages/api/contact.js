@@ -1,5 +1,6 @@
 import {MongoClient} from 'mongodb';
 async function handler(req,res){
+    const mongoUri= process.env.MONGO_URI;
     if(req.method === 'POST'){
         const {email, name, message} = req.body;
         if(!email || !email.includes('@') || !name || name.trim() === '' || !message || message.trim() === '' ){
@@ -14,7 +15,7 @@ async function handler(req,res){
         };
         let client;
         try{
-        client = await MongoClient.connect('mongodb+srv://devrathteotia2001:dev6742@cluster0.knmlrd1.mongodb.net/my-site')
+        client = await MongoClient.connect(mongoUri)
         res.status(201).json({message: 'Successfully stored message!', message: newMessage});
         }
         catch(error){
