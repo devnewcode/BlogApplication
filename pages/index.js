@@ -9,7 +9,7 @@ return (
     <Head>
         <title>Dev's blog</title>
         <meta name="description" 
-        content="i post about programming and web development."
+        content="I post about programming and web development."
          />
     </Head>
         <Hero />

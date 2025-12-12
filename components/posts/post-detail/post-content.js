@@ -26,28 +26,43 @@ function PostContent(props){
             const {node} = paragraph;
             if(node.children[0].tagName === 'img'){
                 const image = node.children[0];
-                return (<div className={classes.image}>
-                    <Image src={`/images/posts/${post.slug}/${image.properties.src}`} 
-            alt={image.alt} 
-            width={600} 
-            height={300} />
-                </div>)
+                return (
+                    <div className={classes.image}>
+                        <Image 
+                            src={`/images/posts/${post.slug}/${image.properties.src}`} 
+                            alt={image.properties.alt || 'Post image'}
+                            width={600} 
+                            height={300}
+                            priority  // ADDED: Prevents LCP warning for above-the-fold images
+                        />
+                    </div>
+                )
             }
             return <p>{paragraph.children}</p>
         },
         code(code){
             const {className, children} = code;
-            const language = className.split('-')[1];
+            // const language = className.split('-')[1];  // REMOVED: This throws error when className is undefined
+            const language = className ? className.split('-')[1] : 'text';  // FIXED: Check if className exists before splitting
 
-            return (<SyntaxHighlighter style={atomDark} 
-            language={language} children={children} />)
-
+            return (
+                <SyntaxHighlighter 
+                    style={atomDark} 
+                    language={language} 
+                    children={children} 
+                />
+            )
         }
     };
 
-    return <article className={classes.content}>
-        <PostHeader title={post.title} image={imagePath} />
-        <ReactMarkdown components={customRenderers}>{post.content}</ReactMarkdown>
-    </article>
+    return (
+        <article className={classes.content}>
+            <PostHeader title={post.title} image={imagePath} />
+            <ReactMarkdown components={customRenderers}>
+                {post.content}
+            </ReactMarkdown>
+        </article>
+    )
 }
+
 export default PostContent;

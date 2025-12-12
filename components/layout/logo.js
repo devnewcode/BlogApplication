@@ -1,5 +1,5 @@
 import classes from './logo.module.css'
 function Logo(){
-    return <div className={classes.logo}>Dev by Devrath Blog</div>
+    return <div className={classes.logo}>DevByDevrath</div>
 }
 export default Logo;
